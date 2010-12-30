@@ -94,7 +94,6 @@ VT.Canvas.HTML.prototype.getEndOfLineOffset = function() {
 }
 
 VT.Canvas.HTML.prototype.cursorNext = function() {
-    var cell;
     if (this.cursorIsAtTheEdge('right')) {
         this.NEL();
     } else {
@@ -108,6 +107,7 @@ VT.Canvas.HTML.prototype.NEL = function() {
     if (!this.cursorIsAtTheEdge('bottom')) {
         this.CR();
         this.LF();
+        this.clearCursor();
     } else {
         this.scrollUp();
     }
@@ -243,9 +243,7 @@ VT.Canvas.HTML.prototype.push = function(chr, sgr) {
 
 VT.Canvas.HTML.prototype.drawCursor = function(chr, sgr) {
     var cell = this.getCurrentCell();
-    if (this.mode.DECTCEM) {
-        cell.classList.add('cursor');
-    }
+    if (this.mode.DECTCEM) cell.classList.add('cursor');
 }
 
 VT.Canvas.HTML.prototype.clearCursor = function(chr, sgr) {
@@ -285,9 +283,8 @@ VT.Canvas.HTML.prototype.CUB = function(code) {
     }
 }
 
-
 VT.Canvas.HTML.prototype.clearSGRStyles = function(cell, grState) {
-    cell.setAttribute('class', '');
+    cell.removeAttribute('class');
 }
 
 VT.Canvas.HTML.prototype.applySGRStyles = function(cell, grState) {

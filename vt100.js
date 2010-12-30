@@ -163,6 +163,7 @@ VT.Core.prototype.RM = function(code) {
 VT.Core.prototype.DECRST = function(codes) {
     var code;
     for (idx in codes) {
+        console.log(code)
         code = codes[idx].replace(/\?/,'');
         switch(parseInt(code)) {
             case 25:
@@ -180,13 +181,11 @@ VT.Core.prototype.DECRST = function(codes) {
 VT.Core.prototype.DECSET = function(codes) {
     var code;
     for (idx in codes) {
+        console.log(codes[idx])
         code = codes[idx].replace(/\?/,'');
         switch(parseInt(code)) {
             case 25:
-                console.log('show cursor');
-                // http://vt100.net/docs/vt510-rm/DECTCEM
                 this.canvas.mode.DECTCEM = true;
-                this.canvas.showCursor();
                 break;
         }
     }
