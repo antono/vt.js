@@ -1,0 +1,6 @@
+[submodule "deps/jasmine"]
+	path = deps/jasmine
+	url = https://github.com/mhevery/jasmine-node.git
+[submodule "deps/should"]
+	path = deps/should
+	url = https://github.com/visionmedia/should.js.git
