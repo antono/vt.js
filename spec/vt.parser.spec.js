@@ -1,4 +1,4 @@
-var VT = require('../src/vt').VT;
+var VT = require('../lib/vt').VT;
 
 describe('VT.Parser', function(){
     var parser;
