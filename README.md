@@ -3,5 +3,19 @@
 HTML5 backend is work in progress.
 [Clutter](http://clutter-project.org) backend planned.
 
+## Documentation
 
-[A parser for DEC’s ANSI-compatible video terminals](http://vt100.net/emu/dec_ansi_parser)
+- [vt100.net](http://vt100.net/)
+- [A parser for DEC’s ANSI-compatible video terminals](http://vt100.net/emu/dec_ansi_parser)
+
+## Testing
+
+We use [jasmine](http://pivotal.github.com/jasmine/) and [should.js](http://github.com/visionmedia/should.js) for testing.
+
+    git submodule update --init
+    make test
+
+For vt100 compatability use `vttest`
+
+    sudo apt-get install vttest && vttest
+
