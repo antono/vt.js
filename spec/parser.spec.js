@@ -82,12 +82,12 @@ describe('Parser', function(){
     describe('changeState(newState)', function() {
         var called;
         beforeEach(function() {
-            called = false
+            called = false;
             Parser.states.HELLO = {
                 exit:  function() { called = true },
                 entry: function() { called = true }
             };
-            parser.state = 'HELLO'
+            parser.state = 'HELLO';
         });
 
         it('should call exit action from old state', function() {
@@ -105,6 +105,20 @@ describe('Parser', function(){
             called.should.be.false;
             parser.changeState('HELLO');
             called.should.be.true;
+        });
+    });
+
+    describe('pushChars(string)', function() {
+        it('it should call pushChar(chr) for each char in string', function() {
+            var times = 0;
+            var str = "12345";
+            parser.pushChar = function(chr) {
+                chr.should.eql(str[times]);
+                times += 1;
+            }
+            times.should.eql(0);
+            parser.pushChars(str);
+            times.should.eql(5);
         });
     });
 
