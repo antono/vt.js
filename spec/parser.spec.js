@@ -29,63 +29,16 @@ describe('Parser', function(){
         });
     });
 
-    describe('states', function() {
-        it('should have states', function() {
-            Parser.states.should.be.instanceof.Object;
-        });
-
-        for (var state in Parser.states) {
-            it(state + ' should be a Object', function() {
-                Parser.states[state].should.be.a('object');
-            });
-        }
-
-        describe('ESCAPE', function() {
-            it('should have clear action on entry', function() {
-                Parser.states.ESCAPE.entry.should.eql(Parser.actions.clear);
-            });
-        });
-
-        describe('CSI_ENTRY', function() {
-            it('should have clear action on entry', function() {
-                Parser.states.CSI_ENTRY.entry.should.eql(Parser.actions.clear);
-            });
-        });
-
-        describe('DCS_ENTRY', function() {
-            it('should have clear action on entry', function() {
-                Parser.states.DCS_ENTRY.entry.should.eql(Parser.actions.clear);
-            });
-        });
-
-        describe('DCS_PASSTHROUGH', function() {
-            it('should have hook action on entry', function() {
-                Parser.states.DCS_PASSTHROUGH.entry.should.eql(Parser.actions.hook);
-            });
-
-            it('should have unhook action on exit', function() {
-                Parser.states.DCS_PASSTHROUGH.exit.should.eql(Parser.actions.unhook);
-            });
-        });
-
-        describe('OSC_STRING', function() {
-            it('should have oscStart action on entry', function() {
-                Parser.states.OSC_STRING.entry.should.eql(Parser.actions.oscStart);
-            });
-
-            it('should have oscEnd action on exit', function() {
-                Parser.states.OSC_STRING.exit.should.eql(Parser.actions.oscEnd);
-            });
-        });
-    });
 
     describe('changeState(newState)', function() {
         var called;
         beforeEach(function() {
             called = false;
-            Parser.states.HELLO = {
-                exit:  function() { called = true },
-                entry: function() { called = true }
+            Parser.actions.xentry = function() { called = true }
+            Parser.actions.xexit = function() { called = true }
+            Parser.transitions.HELLO = {
+                exit: 'xentry',
+                entry: 'xexit',
             };
             parser.state = 'HELLO';
         });
@@ -119,6 +72,15 @@ describe('Parser', function(){
             times.should.eql(0);
             parser.pushChars(str);
             times.should.eql(5);
+        });
+    });
+
+    describe('pushChar(char)', function() {
+        beforeEach(function() {
+            parser = new Parser();
+        })
+        it('should !!!', function() {
+            parser.pushChars("\033[1;31mhello\t\t\033[0m")
         });
     });
 
