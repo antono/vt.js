@@ -13,25 +13,25 @@ module VT100
       end
     end
 
-
-    ANYWHERE_TRANSITIONS = {
-      0x18       => [:execute, Transition.to(:GROUND)],
-      0x1a       => [:execute, Transition.to(:GROUND)],
-      0x80..0x8f => [:execute, Transition.to(:GROUND)],
-      0x91..0x97 => [:execute, Transition.to(:GROUND)],
-      0x99       => [:execute, Transition.to(:GROUND)],
-      0x9a       => [:execute, Transition.to(:GROUND)],
-      0x9c       => Transition.to(:GROUND),
-      0x1b       => Transition.to(:ESCAPE),
-      0x98       => Transition.to(:SOS_PM_APC_STRING),
-      0x9e       => Transition.to(:SOS_PM_APC_STRING),
-      0x9f       => Transition.to(:SOS_PM_APC_STRING),
-      0x90       => Transition.to(:DCS_ENTRY),
-      0x9d       => Transition.to(:OSC_STRING),
-      0x9b       => Transition.to(:CSI_ENTRY),
-    }
-
     STATES = {
+
+      # Pseudo state
+      :ANYWHERE => {
+        0x18       => [:execute, Transition.to(:GROUND)],
+        0x1a       => [:execute, Transition.to(:GROUND)],
+        0x80..0x8f => [:execute, Transition.to(:GROUND)],
+        0x91..0x97 => [:execute, Transition.to(:GROUND)],
+        0x99       => [:execute, Transition.to(:GROUND)],
+        0x9a       => [:execute, Transition.to(:GROUND)],
+        0x9c       => Transition.to(:GROUND),
+        0x1b       => Transition.to(:ESCAPE),
+        0x98       => Transition.to(:SOS_PM_APC_STRING),
+        0x9e       => Transition.to(:SOS_PM_APC_STRING),
+        0x9f       => Transition.to(:SOS_PM_APC_STRING),
+        0x90       => Transition.to(:DCS_ENTRY),
+        0x9d       => Transition.to(:OSC_STRING),
+        0x9b       => Transition.to(:CSI_ENTRY),
+      },
 
       :GROUND => {
         0x00..0x17 => :execute,

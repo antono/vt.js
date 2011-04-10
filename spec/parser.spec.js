@@ -21,8 +21,8 @@ describe('Parser', function(){
     });
 
     describe('actions', function() {
-        ['ignore', 'print', 'execute', 'clear', 'collect', 'param', 'csiDispatch', 'escDispatch',
-            'hook', 'put', 'unhook', 'oscStart', 'oscPut', 'oscEnd'].forEach(function(action) {
+        ['ignore', 'print', 'execute', 'clear', 'collect', 'param', 'csi_dispatch', 'esc_dispatch',
+            'hook', 'put', 'unhook', 'osc_start', 'osc_put', 'osc_end'].forEach(function(action) {
                 it('should have ' + action + 'defined as function', function(){ 
                     Parser.actions[action].should.be.a('function');
                 });
@@ -64,13 +64,13 @@ describe('Parser', function(){
     describe('pushChars(string)', function() {
         it('it should call pushChar(chr) for each char in string', function() {
             var times = 0;
-            var str = "12345";
+            var chars = "abcde";
             parser.pushChar = function(chr) {
-                chr.should.eql(str[times]);
+                chr.should.eql(chars[times]);
                 times += 1;
             }
             times.should.eql(0);
-            parser.pushChars(str);
+            parser.pushChars(chars);
             times.should.eql(5);
         });
     });
@@ -80,7 +80,8 @@ describe('Parser', function(){
             parser = new Parser();
         })
         it('should !!!', function() {
-            parser.pushChars("\033[1;31mhello\t\t\033[0m")
+            parser.pushChars("\033[0;31mhello");
+            // parser.pushChars("\033[1;31mhello\t\t\033[0m");
         });
     });
 
