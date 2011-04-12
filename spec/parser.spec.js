@@ -5,12 +5,8 @@ describe('Parser', function(){
 
     beforeEach(function() { parser = new Parser() })
 
-    it('VT should have actions defined', function(){
-        Parser.actions.should.be.instanceof.Object;
-    });
-
     describe('initialization', function(){
-        it('should have state GROUND', function(){
+        it('should be in state GROUND', function(){
             parser.state.should.eql('GROUND');
         });
         ['numIntermediateChars', 'numParams', 'ignoreFlagged'].forEach(function(property) {
@@ -20,33 +16,31 @@ describe('Parser', function(){
         });
     });
 
-    describe('actions', function() {
-        ['ignore', 'print', 'execute', 'clear', 'collect', 'param', 'csi_dispatch', 'esc_dispatch',
-            'hook', 'put', 'unhook', 'osc_start', 'osc_put', 'osc_end'].forEach(function(action) {
-                it('should have ' + action + 'defined as function', function(){ 
-                    Parser.actions[action].should.be.a('function');
-                });
-        });
-    });
-
-
     describe('changeState(newState)', function() {
-        var called;
+
+        var entryCalled, exitCalled;
+
         beforeEach(function() {
-            called = false;
-            Parser.actions.xentry = function() { called = true }
-            Parser.actions.xexit = function() { called = true }
-            Parser.transitions.HELLO = {
-                exit: 'xentry',
-                entry: 'xexit',
-            };
+
+            entryCalled = false;
+            exitCalled  = false;
+
+            // Fake transition for testing
+            Parser.transitions.HELLO = { exit: 'unhook', entry: 'hook' };
+
+            parser = new Parser(function(parser, action, chr) {
+                if (action === 'unhook') exitCalled = true;
+                if (action === 'hook')   entryCalled = true;
+            });
+
             parser.state = 'HELLO';
         });
 
         it('should call exit action from old state', function() {
-            called.should.be.false;
+            exitCalled.should.be.false;
+            parser.state.should.eql('HELLO');
             parser.changeState('GROUND');
-            called.should.be.true;
+            exitCalled.should.be.true;
         });
 
         it('should change state to newState', function() {
@@ -55,9 +49,9 @@ describe('Parser', function(){
         });
 
         it('should call entry action to newState', function() {
-            called.should.be.false;
+            entryCalled.should.be.false;
             parser.changeState('HELLO');
-            called.should.be.true;
+            entryCalled.should.be.true;
         });
     });
 
@@ -71,17 +65,7 @@ describe('Parser', function(){
             }
             times.should.eql(0);
             parser.pushChars(chars);
-            times.should.eql(5);
-        });
-    });
-
-    describe('pushChar(char)', function() {
-        beforeEach(function() {
-            parser = new Parser();
-        })
-        it('should !!!', function() {
-            parser.pushChars("\033[0;31mhello");
-            // parser.pushChars("\033[1;31mhello\t\t\033[0m");
+            times.should.eql(chars.length);
         });
     });
 
