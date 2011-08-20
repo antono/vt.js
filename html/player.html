@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+  <title>TTY Player</title>
+  <link style='../css/sgr.css' />
+  <link style='../css/player.css' />
+  <script src='../lib/parser.js'></script>
+  <script src='../lib/jsdeferred.js'></script>
+  <script src='../lib/term.js'></script>
+  <script src='../lib/transitions.js'></script>
+  <script src='../lib/canvas.js'></script>
+  <script src='../lib/player.js'></script>
+</head>
+<body>
+  <div class='sgr' id='player'>
+    <div class='header'>
+      <img src='/images/term/buttons.png' />
+      <h1>TTY Cast</h1>
+    </div>
+    <div class='container'></div>
+    <nav class='controls'>
+      <li class='sc-button toggle' data-action='play'>
+        <img src='../images/term/playback-start.png' />
+      </li>
+      <li class='sc-button' data-action='settings'>
+        <img src='../images/term/properties.png' />
+        <ul class='sc-settings'>
+          <li>Play in Your terminal</li>
+        </ul>
+      </li>
+      <li class='progress'>
+        <div class='progress-inner'></div>
+      </li>
+    </nav>
+  </div>
+  <script type='text/javascript'>
+    //<![CDATA[
+      var onLoad = function() {
+        var term = new Term(document.getElementsByClassName('container')[0]);
+        window.player = new SC.Player(document.getElementById('player'), term);
+        window.player.load('');
+      }
+      window.addEventListener('load', onLoad, true);
+    //]]>
+  </script>
+</body>
