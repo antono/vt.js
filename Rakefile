@@ -53,4 +53,18 @@ task :gen do
   puts `cat ./lib/transitions.js`
 end
 
+task :html do
+  sh 'haml ./html/player.haml ./html/player.html'
+end
+
+task :css do
+  sh 'sass ./css/sgr.sass ./css/sgr.css'
+  sh 'sass ./css/player.sass ./css/player.css'
+end
+
+task :static do
+  Rake::Task["html"].invoke
+  Rake::Task["css"].invoke
+end
+
 task :default => :gen
