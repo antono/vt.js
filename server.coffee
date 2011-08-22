@@ -2,6 +2,7 @@
 # Simple node app for debugging
 # npm install express
 #
+# TODO: compile haml and sass on the fly
 express = require('express')
 
 app = express.createServer()
