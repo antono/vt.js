@@ -30,8 +30,8 @@
 
   :javascript
     var onLoad = function() {
-      var term = new Term(document.getElementsByClassName('container')[0]);
-      window.player = new SC.Player(document.getElementById('player'), term);
-      window.player.load('');
+      var term = new VT.Term(document.getElementsByClassName('container')[0]);
+      window.player = new VT.Player(document.getElementById('player'), term);
+      window.player.load('/tmp/test.json');
     }
     window.addEventListener('load', onLoad, true);
