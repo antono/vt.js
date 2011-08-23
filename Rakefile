@@ -8,7 +8,7 @@ task :gen do
 
     file.puts '"use strict;"'
     file.puts
-    file.puts 'module.exports = {'
+    file.puts 'var transitions = {'
 
     VT100::Parser::STATES.each do |state, table|
       file.write "\t" + state.to_json
@@ -47,24 +47,37 @@ task :gen do
       file.write "\t},\n"
     end
     file.puts '};'
+    file.puts <<-JAVASCRIPT
+      if (window) {
+          VT.transitions = transitions;
+      } else if (module) {
+          module.exports = transitions;
+      } else {
+          throw new Exception("WTF ?");
+      }
+    JAVASCRIPT
   end
 
   puts '-' * 80
   puts `cat ./lib/transitions.js`
 end
 
+desc 'Generate HTML from HAML'
 task :html do
   sh 'haml ./html/player.haml ./html/player.html'
 end
 
+desc 'Generate CSS from SASS'
 task :css do
   sh 'sass ./css/sgr.sass ./css/sgr.css'
   sh 'sass ./css/player.sass ./css/player.css'
 end
 
+desc 'Generate all static files'
 task :static do
   Rake::Task["html"].invoke
   Rake::Task["css"].invoke
+  Rake::Task["gen"].invoke
 end
 
 task :default => :gen
