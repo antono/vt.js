@@ -1,0 +1,21 @@
+{
+    "author": "Antono Vasiljev <self@antono.info>",
+    "name": "vt",
+    "description": "VT100 implementation",
+    "version": "0.0.1",
+    "homepage": "https://github.com/antono/vt.js",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/antono/vt.js.git"
+    },
+    "main": "./src/parser.js",
+    "engines": {
+        "node": ">= 0.4.0"
+    },
+    "devDependencies": {
+        "coffee-script": ">= 1.2.0",
+        "express": ">= 2.5.0",
+        "jasmine-node": ">= 1.0.6"
+    },
+    "licenses": [{"type": "LGPL-3"}]
+}
