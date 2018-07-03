@@ -10,7 +10,7 @@ HTML5 backend is work in progress.
 
 ## Testing
 
-We use [jasmine](http://pivotal.github.com/jasmine/) and [should.js](http://github.com/visionmedia/should.js) for testing.
+We use [jasmine](https://jasmine.github.io/) and [should.js](http://github.com/visionmedia/should.js) for testing.
 
     git submodule update --init
     make test
